@@ -1,0 +1,40 @@
+<.header>
+  Listing Todolist
+  <:actions>
+    <.link patch={~p"/todolist/new"}>
+      <.button>New Todo list</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.table id="todolist" rows={@todolist} row_click={&JS.navigate(~p"/todolist/#{&1}")}>
+  <:col :let={todo_list} label="Filter"><%= todo_list.filter %></:col>
+  <:col :let={todo_list} label="Editing"><%= todo_list.editing %></:col>
+  <:action :let={todo_list}>
+    <div class="sr-only">
+      <.link navigate={~p"/todolist/#{todo_list}"}>Show</.link>
+    </div>
+    <.link patch={~p"/todolist/#{todo_list}/edit"}>Edit</.link>
+  </:action>
+  <:action :let={todo_list}>
+    <.link phx-click={JS.push("delete", value: %{id: todo_list.id})} data-confirm="Are you sure?">
+      Delete
+    </.link>
+  </:action>
+</.table>
+
+<.modal
+  :if={@live_action in [:new, :edit]}
+  id="todo_list-modal"
+  show
+  on_cancel={JS.navigate(~p"/todolist")}
+>
+  <.live_component
+    module={AdminWeb.TodoListLive.FormComponent}
+    id={@todo_list.id || :new}
+    title={@page_title}
+    action={@live_action}
+    todo_list={@todo_list}
+    navigate={~p"/todolist"}
+  />
+</.modal>

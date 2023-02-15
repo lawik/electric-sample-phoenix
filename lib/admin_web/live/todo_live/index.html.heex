@@ -1,0 +1,41 @@
+<.header>
+  Listing Todos
+  <:actions>
+    <.link patch={~p"/todos/new"}>
+      <.button>New Todo</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.table id="todos" rows={@todos} row_click={&JS.navigate(~p"/todos/#{&1}")}>
+  <:col :let={todo} label="Listid"><%= todo.listid %></:col>
+  <:col :let={todo} label="Text"><%= todo.text %></:col>
+  <:col :let={todo} label="Completed"><%= todo.completed %></:col>
+  <:action :let={todo}>
+    <div class="sr-only">
+      <.link navigate={~p"/todos/#{todo}"}>Show</.link>
+    </div>
+    <.link patch={~p"/todos/#{todo}/edit"}>Edit</.link>
+  </:action>
+  <:action :let={todo}>
+    <.link phx-click={JS.push("delete", value: %{id: todo.id})} data-confirm="Are you sure?">
+      Delete
+    </.link>
+  </:action>
+</.table>
+
+<.modal
+  :if={@live_action in [:new, :edit]}
+  id="todo-modal"
+  show
+  on_cancel={JS.navigate(~p"/todos")}
+>
+  <.live_component
+    module={AdminWeb.TodoLive.FormComponent}
+    id={@todo.id || :new}
+    title={@page_title}
+    action={@live_action}
+    todo={@todo}
+    navigate={~p"/todos"}
+  />
+</.modal>
