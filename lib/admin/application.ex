@@ -47,7 +47,17 @@ defmodule Admin.Application do
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options
     opts = [strategy: :one_for_one, name: Admin.Supervisor]
-    Supervisor.start_link(children, opts)
+    {:ok, result} = Supervisor.start_link(children, opts)
+
+    Task.start(fn ->
+      # Attempt to create publication, fails if already done :)
+      Ecto.Adapters.SQL.query(
+        Admin.Repo,
+        "CREATE PUBLICATION example_publication FOR ALL TABLES"
+      )
+    end)
+
+    {:ok, result}
   end
 
   # Tell Phoenix to update the endpoint configuration
