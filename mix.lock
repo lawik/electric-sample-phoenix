@@ -1,5 +1,5 @@
 %{
-  "cainophile": {:hex, :cainophile, "0.1.0", "84470e936e3d7766de6f6e577c0f426d16a06d4e078f932679f245bb49b3d04e", [:mix], [{:epgsql, "~> 4.2", [hex: :epgsql, repo: "hexpm", optional: false]}, {:pgoutput_decoder, "~> 0.1.0", [hex: :pgoutput_decoder, repo: "hexpm", optional: false]}], "hexpm", "ce56dd94b1e828c9927411ea8c72b2a089739c3b65eebcf47f260eae769472c9"},
+  "cainophile": {:git, "https://github.com/lawik/cainophile.git", "0f87777b9acd11795847568fa723e2bcbcc7eb39", [ref: "ignore-new-message-types"]},
   "castore": {:hex, :castore, "0.1.22", "4127549e411bedd012ca3a308dede574f43819fe9394254ca55ab4895abfa1a2", [:mix], [], "hexpm", "c17576df47eb5aa1ee40cc4134316a99f5cad3e215d5c77b8dd3cfef12a22cac"},
   "connection": {:hex, :connection, "1.1.0", "ff2a49c4b75b6fb3e674bfc5536451607270aac754ffd1bdfe175abe4a6d7a68", [:mix], [], "hexpm", "722c1eb0a418fbe91ba7bd59a47e28008a189d47e37e0e7bb85585a016b2869c"},
   "cowboy": {:hex, :cowboy, "2.9.0", "865dd8b6607e14cf03282e10e934023a1bd8be6f6bacf921a7e2a96d800cd452", [:make, :rebar3], [{:cowlib, "2.11.0", [hex: :cowlib, repo: "hexpm", optional: false]}, {:ranch, "1.8.0", [hex: :ranch, repo: "hexpm", optional: false]}], "hexpm", "2c729f934b4e1aa149aff882f57c6372c15399a20d54f65c8d67bef583021bde"},

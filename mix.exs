@@ -51,8 +51,9 @@ defmodule Admin.MixProject do
       {:gettext, "~> 0.20"},
       {:jason, "~> 1.2"},
       {:plug_cowboy, "~> 2.5"},
-      #{:cainophile, "~> 0.1.0"},
-      {:cainophile, path: "../../cainophile"},
+      # {:cainophile, "~> 0.1.0"},
+      # Use hacked cainophile fork to ignore unexpected message types
+      {:cainophile, github: "lawik/cainophile", ref: "ignore-new-message-types"},
       {:uuid, "~> 1.1"}
     ]
   end
