@@ -46,7 +46,7 @@ defmodule Admin.MixProject do
           [
             {:exqlite, ">= 0.0.0"},
             {:ecto_sqlite3, ">= 0.0.0"},
-            {:electric_sidecar, github: "lawik/electric-sidecar", ref: "elixir-library-2"}
+            {:electric_sidecar, github: "lawik/electric-sidecar", ref: "72e5c84f533bda638e5413f46ee16aeaf3943f6c"}
           ]
       end
 

@@ -1,5 +1,14 @@
 defmodule Admin.Repo.Utils do
   require Logger
+
+  @config "ELECTRIC_CONFIG"
+          |> System.fetch_env!()
+          |> Path.expand()
+          |> File.read!()
+          |> String.split("export default ")
+          |> Enum.at(1)
+          |> Jason.decode!()
+
   case System.fetch_env!("DB") do
     "postgres" ->
       def children do
@@ -45,9 +54,8 @@ defmodule Admin.Repo.Utils do
 
     "sqlite" ->
       def children do
-        config_path = Path.expand("~/projects/electric/sidecar/.electric/pinnate-aquarius-9466/default/index.js")
         [
-          {ElectricSidecar, path: "/tmp/database.db", config_path: config_path, pid: Admin.Repo.Watcher}
+          {ElectricSidecar, path: "/tmp/database.db", config: @config, pid: Admin.Repo.Watcher}
         ]
       end
 
