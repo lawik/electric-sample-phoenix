@@ -6,7 +6,7 @@ defmodule AdminWeb.TodoLive.Index do
 
   @impl true
   def mount(_params, _session, socket) do
-    Cainophile.Adapters.Postgres.subscribe(Cainophile.ExamplePublisher, self())
+    Phoenix.PubSub.subscribe(Admin.PubSub, "changes:todo")
     {:ok, assign(socket, :todos, list_todos())}
   end
 
@@ -16,7 +16,7 @@ defmodule AdminWeb.TodoLive.Index do
   end
 
   @impl true
-  def handle_info(%Cainophile.Changes.Transaction{}, socket) do
+  def handle_info(:updated, socket) do
     {:noreply, assign(socket, :todos, list_todos())}
   end
 

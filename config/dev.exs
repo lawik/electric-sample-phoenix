@@ -1,11 +1,16 @@
 import Config
 
+db = case System.fetch_env!("DB") do
+  "postgres" -> "electric"
+  "sqlite" -> "/tmp/database.db"
+end
+
 # Configure your database
 config :admin, Admin.Repo,
   username: "electric",
   password: "password",
   hostname: "localhost",
-  database: "electric",
+  database: db,
   ssl: false,
   # url: "postgresql://electric:QnyBZPsoJukZJ+iTv33PfyoelkQiyneY@default.pinnate-aquarius-9466.db.electric-sql.com/electric?sslmode=require",
   port: 54323,

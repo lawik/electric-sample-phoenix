@@ -10,34 +10,13 @@ defmodule Admin.Application do
     children = [
       # Start the Telemetry supervisor
       AdminWeb.Telemetry,
-      # Start the Ecto repository
-      Admin.Repo,
       # Start the PubSub system
       {Phoenix.PubSub, name: Admin.PubSub},
       # Start Finch
       {Finch, name: Admin.Finch},
+      # Start the repo supervisor
+      Admin.Repo.Supervisor,
       # Start the Endpoint (http/https)
-      {
-        Cainophile.Adapters.Postgres,
-        # name this process will be registered globally as, for usage with Cainophile.Adapters.Postgres.subscribe/2
-        # All epgsql options are supported here
-        # :temporary is also supported if you don't want Postgres keeping track of what you've acknowledged
-        # You can provide a different WAL position if desired, or default to allowing Postgres to send you what it thinks you need
-        register: Cainophile.ExamplePublisher,
-        epgsql: %{
-          host: 'localhost',
-          #    host: 'default.pinnate-aquarius-9466.db.electric-sql.com',
-          username: "electric",
-          database: "electric",
-          password: "password",
-          port: 54323,
-          #    port: 5432,
-          ssl: false
-        },
-        slot: :temporary,
-        wal_position: {"0", "0"},
-        publications: ["example_publication"]
-      },
       AdminWeb.Endpoint
 
       # Start a worker by calling: Admin.Worker.start_link(arg)

@@ -27,15 +27,33 @@ defmodule Admin.MixProject do
   defp elixirc_paths(:test), do: ["lib", "test/support"]
   defp elixirc_paths(_), do: ["lib"]
 
+
+
   # Specifies your project dependencies.
   #
   # Type `mix help deps` for examples and options.
   defp deps do
+    db_deps =
+      case System.fetch_env!("DB") do
+        "postgres" ->
+          [
+            {:postgrex, ">= 0.0.0"},
+            # {:cainophile, "~> 0.1.0"},
+            # Use hacked cainophile fork to ignore unexpected message types
+            {:cainophile, github: "lawik/cainophile", ref: "ignore-new-message-types"}
+          ]
+        "sqlite" ->
+          [
+            {:exqlite, ">= 0.0.0"},
+            {:ecto_sqlite3, ">= 0.0.0"},
+            {:electric_sidecar, github: "lawik/electric-sidecar", ref: "elixir-library-2"}
+          ]
+      end
+
     [
       {:phoenix, "~> 1.7.0-rc.0", override: true},
       {:phoenix_ecto, "~> 4.4"},
       {:ecto_sql, "~> 3.6"},
-      {:postgrex, ">= 0.0.0"},
       {:phoenix_html, "~> 3.0"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
       {:phoenix_live_view, "~> 0.18.3"},
@@ -51,11 +69,8 @@ defmodule Admin.MixProject do
       {:gettext, "~> 0.20"},
       {:jason, "~> 1.2"},
       {:plug_cowboy, "~> 2.5"},
-      # {:cainophile, "~> 0.1.0"},
-      # Use hacked cainophile fork to ignore unexpected message types
-      {:cainophile, github: "lawik/cainophile", ref: "ignore-new-message-types"},
       {:uuid, "~> 1.1"}
-    ]
+    ] ++ db_deps
   end
 
   # Aliases are shortcuts or tasks specific to the current project.
