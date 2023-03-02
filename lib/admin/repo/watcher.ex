@@ -19,7 +19,7 @@ defmodule Admin.Repo.Watcher do
     |> Enum.uniq()
     |> Enum.each(fn type ->
       Logger.info("Broadcasting change for type '#{type}'.")
-      Phoenix.PubSub.broadcast(Admin.PubSub, "changes:#{type}", :updated)
+      Phoenix.PubSub.local_broadcast(Admin.PubSub, "changes:#{type}", :updated)
     end)
     {:noreply, state}
   end
