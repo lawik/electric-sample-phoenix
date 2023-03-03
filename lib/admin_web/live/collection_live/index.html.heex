@@ -1,0 +1,40 @@
+<.header>
+  Listing Collections
+  <:actions>
+    <.link patch={~p"/collections/new"}>
+      <.button>New Collection</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.table id="collections" rows={@collections} row_click={&JS.navigate(~p"/collections/#{&1}")}>
+  <:col :let={collection} label="Slug"><%= collection.slug %></:col>
+  <:col :let={collection} label="Name"><%= collection.name %></:col>
+  <:action :let={collection}>
+    <div class="sr-only">
+      <.link navigate={~p"/collections/#{collection}"}>Show</.link>
+    </div>
+    <.link patch={~p"/collections/#{collection}/edit"}>Edit</.link>
+  </:action>
+  <:action :let={collection}>
+    <.link phx-click={JS.push("delete", value: %{id: collection.id})} data-confirm="Are you sure?">
+      Delete
+    </.link>
+  </:action>
+</.table>
+
+<.modal
+  :if={@live_action in [:new, :edit]}
+  id="collection-modal"
+  show
+  on_cancel={JS.navigate(~p"/collections")}
+>
+  <.live_component
+    module={AdminWeb.CollectionLive.FormComponent}
+    id={@collection.id || :new}
+    title={@page_title}
+    action={@live_action}
+    collection={@collection}
+    navigate={~p"/collections"}
+  />
+</.modal>

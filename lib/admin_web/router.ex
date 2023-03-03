@@ -32,6 +32,14 @@ defmodule AdminWeb.Router do
     live "/todolist/:id", TodoListLive.Show, :show
     live "/todolist/:id/show/edit", TodoListLive.Show, :edit
 
+    scope "/admin/" do
+      live "/collections", CollectionLive.Index, :index
+      live "/collections/new", CollectionLive.Index, :new
+      live "/collections/:id/edit", CollectionLive.Index, :edit
+
+      live "/collections/:id", CollectionLive.Show, :show
+      live "/collections/:id/show/edit", CollectionLive.Show, :edit
+    end
   end
 
 

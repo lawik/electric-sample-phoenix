@@ -7,6 +7,8 @@
   </:actions>
 </.header>
 
+<div>Region: <%= System.get_env("FLY_REGION") %></div>
+
 <.table id="todos" rows={@todos} row_click={&JS.navigate(~p"/todos/#{&1}")}>
   <:col :let={todo} label="Listid"><%= todo.listid %></:col>
   <:col :let={todo} label="Text"><%= todo.text %></:col>
